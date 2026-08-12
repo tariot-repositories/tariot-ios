@@ -11,7 +11,7 @@ import SwiftUI
 struct chal5_ios_appApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DeliveryOrderView()
         }
     }
 }

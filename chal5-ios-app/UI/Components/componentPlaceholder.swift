@@ -5,4 +5,4 @@
 //  Created by Danniel on 12/08/26.
 //
 
-// This file is only for models folder still exists
+// This file is only for components folder still exists
