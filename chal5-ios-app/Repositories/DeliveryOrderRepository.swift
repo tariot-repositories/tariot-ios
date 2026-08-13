@@ -37,10 +37,27 @@ final class DeliveryOrderRepository {
         }
     }
     
-    func acceptActiveOrder(order: DeliveryOrder) async throws -> Bool {
+    func acceptActiveOrder(order: DeliveryOrder) async throws -> Void {
         
-        return true
+        let url = baseURL.appendingPathComponent("tasks/accept-delivery-task")
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONEncoder().encode(order)
+        
+        let (_, response) = try await session.data(for: request)
+        guard let http = response as? HTTPURLResponse else {
+            throw APIError.badResponse
+        }
+
+        switch http.statusCode {
+        case 200:
+            return // Success
+        default:
+            throw APIError.badResponse
+        }
     }
 }
 
 enum APIError: Error { case badResponse }
+
