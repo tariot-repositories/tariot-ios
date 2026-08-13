@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootView: View {
     @StateObject var viewModel = RootViewModel()
-    @StateObject var router: Router = Router()
+    @StateObject var router: Router = .shared
     
     var body: some View {
         NavigationStack (path: $router.path) {

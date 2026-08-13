@@ -10,7 +10,6 @@ import Combine
 
 struct DeliveryOrderView: View {
     @ObservedObject var viewModel: DeliveryOrderViewModel
-    @StateObject var router: Router = Router()
     
     init(viewModel: DeliveryOrderViewModel) {
         self.viewModel = viewModel
@@ -67,7 +66,7 @@ private extension DeliveryOrderView {
                 .padding()
                 .onChange(of: viewModel.acceptingDeliveryState) { _, newState in
                     if newState == .detectionNodePhase {
-                        router.push(.nodeDetection(order))
+                        Router.shared.push(.nodeDetection(order))
                     }
                 }
             } else {

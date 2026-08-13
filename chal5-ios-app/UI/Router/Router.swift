@@ -16,6 +16,8 @@ enum Route: Hashable {
 
 
 final class Router: ObservableObject {
+    static let shared = Router()
+    
     @Published var path = NavigationPath()
     
     func push(_ route: Route) {
