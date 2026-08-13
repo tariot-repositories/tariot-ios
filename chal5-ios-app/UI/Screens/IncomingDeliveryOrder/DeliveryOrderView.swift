@@ -57,9 +57,10 @@ private extension DeliveryOrderView {
                     
                     retryButton()
                     Button("Terima Pesanan BIKI") {
-                        // Action Later
-                    }
-                    
+                        Task {
+                            await viewModel.acceptActiveOrder(order: order)
+                        }
+                    }.disabled(viewModel.acceptingDeliveryState == DeliveryOrderViewModel.AcceptingDeliverState.acceptingDeliverOrder)
                     Spacer()
                 }
                 .padding()
