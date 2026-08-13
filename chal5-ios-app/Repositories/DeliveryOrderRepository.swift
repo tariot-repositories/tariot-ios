@@ -51,7 +51,7 @@ final class DeliveryOrderRepository {
         }
 
         switch http.statusCode {
-        case 200:
+        case 201:
             return // Success
         default:
             throw APIError.badResponse

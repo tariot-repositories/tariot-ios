@@ -14,10 +14,8 @@ struct RootView: View {
         switch viewModel.state {
         case .idle:
             LoadingView()
-                .onAppear {
-                    Task {
-                        await viewModel.loadActiveOrder()
-                    }
+                .task {
+                    await viewModel.loadActiveOrder()
                 }
         case .loading:
             LoadingView()

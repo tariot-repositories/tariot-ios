@@ -10,6 +10,7 @@ import Combine
 
 struct DeliveryOrderView: View {
     @ObservedObject var viewModel: DeliveryOrderViewModel
+    @StateObject var router: Router = Router()
     
     init(viewModel: DeliveryOrderViewModel) {
         self.viewModel = viewModel
@@ -23,16 +24,20 @@ struct DeliveryOrderView: View {
     }
     
     @ViewBuilder var content: some View {
-        NavigationStack {
-            switch viewModel.state {
-            case .idle:
-                Color.clear
-            case .loading:
-                LoadingView()
-            case .loaded(let deliveryOrder):
-                loadedView(deliveryOrder)
-            case .failed(let message):
-                ErrorView(message: message, retryAction: retry)
+        NavigationStack (path: $router.path) {
+            Group {
+                switch viewModel.state {
+                case .idle:
+                    Color.clear
+                case .loading:
+                    LoadingView()
+                case .loaded(let deliveryOrder):
+                    loadedView(deliveryOrder)
+                case .failed(let message):
+                    ErrorView(message: message, retryAction: retry)
+                }
+            }.navigationDestination (for: Route.self) {
+                route in RouteDestinationView(route: route)
             }
         }
     }
@@ -63,6 +68,11 @@ private extension DeliveryOrderView {
                     Spacer()
                 }
                 .padding()
+                .onChange(of: viewModel.acceptingDeliveryState) { _, newState in
+                    if newState == .detectionNodePhase {
+                        router.push(.nodeDetection(order))
+                    }
+                }
             } else {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("No active delivery order")

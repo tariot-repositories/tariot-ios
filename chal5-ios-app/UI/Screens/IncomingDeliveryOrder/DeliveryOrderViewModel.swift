@@ -60,7 +60,7 @@ final class DeliveryOrderViewModel: ObservableObject {
             return
         }
         
-        acceptingDeliveryState = .detectionNodePhase(order)
+        acceptingDeliveryState = .detectionNodePhase
     }
 }
 
@@ -75,7 +75,7 @@ extension DeliveryOrderViewModel {
     enum AcceptingDeliverState: Equatable {
         case idle
         case acceptingDeliverOrder
-        case detectionNodePhase(DeliveryOrder)
+        case detectionNodePhase
         case failed(String)
     }
 }
