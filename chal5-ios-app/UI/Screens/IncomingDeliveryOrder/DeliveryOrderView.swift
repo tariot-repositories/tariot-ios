@@ -65,38 +65,50 @@ private extension DeliveryOrderView {
                 }
                 .padding()
             } else {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("No active delivery order")
-                        .foregroundStyle(.secondary)
-                    retryButton()
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("No active delivery order")
+                            .foregroundStyle(.secondary)
+                        retryButton()
+                    }
+                }.refreshable {
+                    Task {
+                        await viewModel.loadActiveOrder()
                     }
                 }
             }
+            
         }
     }
-    
-    // MARK: Failed/Error
-    
-    private extension DeliveryOrderView {
-        func failedView(_ message: String) -> some View {
+}
+// MARK: Failed/Error
+
+private extension DeliveryOrderView {
+    func failedView(_ message: String) -> some View {
+        ScrollView {
             VStack(spacing: 12) {
                 Text("Something went wrong: \(message)")
                 Button("Retry") {
                     Task { await viewModel.loadActiveOrder() }
                 }
             }
-        }
-    }
-    
-    // MARK: Util
-    private extension DeliveryOrderView {
-        func retryButton() -> some View {
-            Button("Retry") {
-                Task { await viewModel.loadActiveOrder() }
+        }.refreshable {
+            Task {
+                await viewModel.loadActiveOrder()
             }
         }
     }
-    
-    #Preview {
-        DeliveryOrderView()
+}
+
+// MARK: Util
+private extension DeliveryOrderView {
+    func retryButton() -> some View {
+        Button("Retry") {
+            Task { await viewModel.loadActiveOrder() }
+        }
     }
+}
+
+#Preview {
+    DeliveryOrderView()
+}
