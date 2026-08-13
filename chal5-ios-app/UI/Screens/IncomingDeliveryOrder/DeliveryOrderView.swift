@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import Combine
 
 struct DeliveryOrderView: View {
-    @StateObject var viewModel = DeliveryOrderViewModel()
+    @ObservedObject var viewModel: DeliveryOrderViewModel
+    
+    init(viewModel: DeliveryOrderViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         content
@@ -18,24 +23,18 @@ struct DeliveryOrderView: View {
     }
     
     @ViewBuilder var content: some View {
-        switch viewModel.state {
-        case .idle:
-            Color.clear
-        case .loading:
-            loadingView
-        case .loaded(let deliveryOrder):
-            loadedView(deliveryOrder)
-        case .failed(let message):
-            failedView(message)
+        NavigationStack {
+            switch viewModel.state {
+            case .idle:
+                Color.clear
+            case .loading:
+                LoadingView()
+            case .loaded(let deliveryOrder):
+                loadedView(deliveryOrder)
+            case .failed(let message):
+                ErrorView(message: message, retryAction: retry)
+            }
         }
-    }
-}
-
-// MARK: Load View
-
-private extension DeliveryOrderView {
-    var loadingView: some View {
-        ProgressView("Loading...")
     }
 }
 
@@ -65,36 +64,11 @@ private extension DeliveryOrderView {
                 }
                 .padding()
             } else {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("No active delivery order")
-                            .foregroundStyle(.secondary)
-                        retryButton()
-                    }
-                }.refreshable {
-                    Task {
-                        await viewModel.loadActiveOrder()
-                    }
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("No active delivery order")
+                        .foregroundStyle(.secondary)
+                    retryButton()
                 }
-            }
-            
-        }
-    }
-}
-// MARK: Failed/Error
-
-private extension DeliveryOrderView {
-    func failedView(_ message: String) -> some View {
-        ScrollView {
-            VStack(spacing: 12) {
-                Text("Something went wrong: \(message)")
-                Button("Retry") {
-                    Task { await viewModel.loadActiveOrder() }
-                }
-            }
-        }.refreshable {
-            Task {
-                await viewModel.loadActiveOrder()
             }
         }
     }
@@ -104,11 +78,15 @@ private extension DeliveryOrderView {
 private extension DeliveryOrderView {
     func retryButton() -> some View {
         Button("Retry") {
-            Task { await viewModel.loadActiveOrder() }
+            retry()
         }
+    }
+    
+    func retry() {
+        Task { await viewModel.loadActiveOrder() }
     }
 }
 
-#Preview {
-    DeliveryOrderView()
+#Preview ("Delivery Order View"){
+    DeliveryOrderView(viewModel: DeliveryOrderViewModel(state: DeliveryOrderViewModel.State.idle))
 }

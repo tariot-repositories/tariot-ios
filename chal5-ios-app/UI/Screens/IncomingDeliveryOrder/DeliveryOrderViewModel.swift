@@ -15,8 +15,9 @@ final class DeliveryOrderViewModel: ObservableObject {
 
     private let repository: DeliveryOrderRepository
 
-    init(repository: DeliveryOrderRepository = DeliveryOrderRepository()) {
+    init(repository: DeliveryOrderRepository = DeliveryOrderRepository(), state: State) {
         self.repository = repository
+        self.state = state
     }
 
     func loadActiveOrder() async {
