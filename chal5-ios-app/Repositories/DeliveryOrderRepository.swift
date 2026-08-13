@@ -15,7 +15,7 @@ final class DeliveryOrderRepository {
     init(session: URLSession = .shared) {
         self.session = session
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .secondsSince1970
         self.decoder = decoder
     }
 

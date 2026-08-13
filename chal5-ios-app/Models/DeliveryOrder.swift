@@ -9,6 +9,8 @@ import Foundation
 
 struct DeliveryOrder: Codable, Identifiable, Hashable {
     let id: Int
+    let masterCode: String
+    let slaveCounts: Int
     let truckId: Int
     let originLocation: String
     let destinationLocation: String
@@ -21,6 +23,8 @@ struct DeliveryOrder: Codable, Identifiable, Hashable {
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
+        case masterCode = "master_code"
+        case slaveCounts = "slave_counts"
         case truckId = "truck_id"
         case originLocation = "origin_location"
         case destinationLocation = "destination_location"

@@ -8,9 +8,40 @@
 import SwiftUI
 
 struct NodeSlaveDetection: View {
+    @ObservedObject var viewModel: NodeSlaveDetectionViewModel
+    
+    init(viewModel: NodeSlaveDetectionViewModel) {
+        self.viewModel = viewModel
+    }
+
     var body: some View {
-        VStack {
-            Text("Hello")
+        Group {
+            VStack {
+                
+                List(viewModel.slaveCodeList.enumerated(), id: \.offset) { _, code in
+                    Text(code)
+                }
+                
+                if viewModel.decodeError != nil {
+                    Text(viewModel.decodeError!)
+                }
+                
+                if viewModel.isListening {
+                    Text("Listening..")
+                } else {
+                    Text("Not Listening..")
+                }
+                
+                Button ("Start Listening") {
+                    Task {
+                        await viewModel.start(base_topic: viewModel.deliveryOrder.masterCode)
+                    }
+                }
+                
+                Button ("Stop Listening") {
+                    viewModel.stop()
+                }
+            }
         }.navigationBarBackButtonHidden(true)
     }
 }

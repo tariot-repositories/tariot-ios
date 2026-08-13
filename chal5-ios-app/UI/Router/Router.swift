@@ -17,11 +17,11 @@ enum Route: Hashable {
 
 final class Router: ObservableObject {
     @Published var path = NavigationPath()
-
+    
     func push(_ route: Route) {
         path.append(route)
     }
-
+    
     func pop() {
         guard !path.isEmpty else { return }
         path.removeLast()
@@ -33,8 +33,10 @@ struct RouteDestinationView: View {
     
     var body: some View {
         switch route {
-        case .nodeDetection(_):
-            NodeSlaveDetection()
+        case .nodeDetection(let order):
+            NodeSlaveDetection(
+                viewModel: NodeSlaveDetectionViewModel(order: order)
+            )
         case .inDelivery(_):
             EmptyView()
         case .complete:
