@@ -24,22 +24,19 @@ struct DeliveryOrderView: View {
     }
     
     @ViewBuilder var content: some View {
-        NavigationStack (path: $router.path) {
-            Group {
-                switch viewModel.state {
-                case .idle:
-                    Color.clear
-                case .loading:
-                    LoadingView()
-                case .loaded(let deliveryOrder):
-                    loadedView(deliveryOrder)
-                case .failed(let message):
-                    ErrorView(message: message, retryAction: retry)
-                }
-            }.navigationDestination (for: Route.self) {
-                route in RouteDestinationView(route: route)
+        Group {
+            switch viewModel.state {
+            case .idle:
+                Color.clear
+            case .loading:
+                LoadingView()
+            case .loaded(let deliveryOrder):
+                loadedView(deliveryOrder)
+            case .failed(let message):
+                ErrorView(message: message, retryAction: retry)
             }
         }
+        
     }
 }
 
@@ -95,8 +92,4 @@ private extension DeliveryOrderView {
     func retry() {
         Task { await viewModel.loadActiveOrder() }
     }
-}
-
-#Preview ("Delivery Order View"){
-    DeliveryOrderView(viewModel: DeliveryOrderViewModel(state: DeliveryOrderViewModel.State.idle))
 }

@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 class RootViewModel: ObservableObject {
-    @Published private(set) var state: DeliveryOrderState = .idle
+    @Published private(set) var state: DeliveryOrderState = .loading
     
     private let repository: DeliveryOrderRepository
 
@@ -18,7 +18,6 @@ class RootViewModel: ObservableObject {
     }
 
     func loadActiveOrder() async {
-        state = .loading
         var deliveryOrder: DeliveryOrder?
         
         do {
@@ -37,7 +36,7 @@ class RootViewModel: ObservableObject {
         case "menunggu_konfirmasi_supir":
             state = .deliveryNotAccepted(order)
         case "menunggu_deteksi_node":
-            state = .nodeDetectionState
+            state = .nodeDetectionState(order)
         case "dalam_perjalanan":
             state = .inDeliveryState
         default:
@@ -48,6 +47,6 @@ class RootViewModel: ObservableObject {
 
 extension RootViewModel {
     enum DeliveryOrderState {
-        case idle, loading, deliveryNotAccepted(DeliveryOrder?), nodeDetectionState, inDeliveryState, failed(String)
+        case loading, deliveryNotAccepted(DeliveryOrder?), nodeDetectionState(DeliveryOrder), inDeliveryState, failed(String)
     }
 }
