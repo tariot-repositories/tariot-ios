@@ -30,7 +30,25 @@ struct DeliveryOrderView: View {
             
         }
         .actionFooter {
-            PrimaryActionButton()
+            switch viewModel.state {
+            case .idle:
+                WaitingBikiButton()
+            case .loading:
+                WaitingBikiButton()
+            case .loaded(let deliveryOrder):
+                if deliveryOrder == nil {
+                    WaitingBikiButton()
+                } else {
+                    PrimaryActionButton(
+                        title: "Terima tugas", isLoading: viewModel.acceptingDeliveryState == DeliveryOrderViewModel.AcceptingDeliverState.acceptingDeliverOrder) {
+                            Task {
+                                await viewModel.acceptActiveOrder(order: deliveryOrder!)
+                            }
+                        }
+                }
+            case .failed(_):
+                WaitingBikiButton()
+            }
         }
         .background(
             Color.veryLigthGreen
@@ -69,11 +87,7 @@ private extension DeliveryOrderView {
                     Spacer()
                     
                     retryButton()
-                    Button("Terima Pesanan BIKI") {
-                        Task {
-                            await viewModel.acceptActiveOrder(order: order)
-                        }
-                    }.disabled(viewModel.acceptingDeliveryState == DeliveryOrderViewModel.AcceptingDeliverState.acceptingDeliverOrder)
+                    
                     Spacer()
                 }
                 .padding()
@@ -93,7 +107,6 @@ private extension DeliveryOrderView {
                         .foregroundStyle(Color.greyText)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 40)
-//                    retryButton()
                 }
             }
         }
