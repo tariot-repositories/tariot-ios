@@ -5,7 +5,7 @@
 //  Created by Danniel on 13/08/26.
 //
 
-struct SlaveData: Decodable {
+struct SlaveData: Codable {
     let slaveCode: String
     let secondSinceEpoch: Int
     

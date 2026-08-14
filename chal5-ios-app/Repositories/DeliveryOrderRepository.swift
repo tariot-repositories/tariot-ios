@@ -58,6 +58,3 @@ final class DeliveryOrderRepository {
         }
     }
 }
-
-enum APIError: Error { case badResponse }
-

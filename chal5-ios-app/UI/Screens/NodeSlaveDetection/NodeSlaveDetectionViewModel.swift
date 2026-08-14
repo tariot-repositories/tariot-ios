@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 final class NodeSlaveDetectionViewModel: ObservableObject {
-    @Published private(set) var slaveCodeList: [String] = []
+    @Published private(set) var slaveCodeList: [SlaveData] = []
     var slaveCodeSet: Set<String> = Set<String>()
     
     @Published var isListening: Bool = false
@@ -45,7 +45,7 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
                         if Int(Date.now.timeIntervalSince1970) - decodedData.secondSinceEpoch < 2 {
                             if slaveCodeSet.contains(decodedData.slaveCode) == false {
                                 slaveCodeSet.insert(decodedData.slaveCode)
-                                slaveCodeList.append(decodedData.slaveCode)
+                                slaveCodeList.append(decodedData)
                             }
                         }
                     } catch {
@@ -56,6 +56,12 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
         } catch {
             print("MQTT connect failed: \(error)")
         }
+    }
+    
+    func submitDetectedSlave () {
+        stop()
+        
+        
     }
     
     func stop() {

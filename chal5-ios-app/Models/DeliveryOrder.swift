@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DeliveryOrder: Codable, Identifiable, Hashable {
+struct DeliveryOrder: Codable, Hashable {
     let id: Int
     let masterCode: String
     let slaveCounts: Int

@@ -105,6 +105,7 @@ extension MQTTRepository: CocoaMQTTDelegate {
     func mqttDidReceivePong(_ mqtt: CocoaMQTT) {}
 }
 
+
 enum MQTTError: Error {
     case connectionFailed(CocoaMQTTConnAck)
     case disconnected

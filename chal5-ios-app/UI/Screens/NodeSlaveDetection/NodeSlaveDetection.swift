@@ -19,7 +19,7 @@ struct NodeSlaveDetection: View {
             VStack {
                 
                 List(viewModel.slaveCodeList.enumerated(), id: \.offset) { _, code in
-                    Text(code)
+                    Text(code.slaveCode)
                 }
                 
                 if viewModel.decodeError != nil {
