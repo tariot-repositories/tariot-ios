@@ -16,10 +16,25 @@ struct DeliveryOrderView: View {
     }
     
     var body: some View {
-        content
-            .task {
-                await viewModel.loadActiveOrder()
-            }
+        VStack (spacing: 0) {
+            
+            Header()
+            
+            Spacer()
+            
+            content
+                .task {
+                    await viewModel.loadActiveOrder()
+                }
+            Spacer()
+            
+        }
+        .actionFooter {
+            PrimaryActionButton()
+        }
+        .background(
+            Color.veryLigthGreen
+        )
     }
     
     @ViewBuilder var content: some View {
@@ -35,12 +50,10 @@ struct DeliveryOrderView: View {
                 ErrorView(message: message, retryAction: retry)
             }
         }
-        
     }
 }
 
 // MARK: Loaded View
-
 private extension DeliveryOrderView {
     func loadedView(_ order: DeliveryOrder?) -> some View {
         Group {
@@ -70,10 +83,17 @@ private extension DeliveryOrderView {
                     }
                 }
             } else {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("No active delivery order")
-                        .foregroundStyle(.secondary)
-                    retryButton()
+                VStack(alignment: .center, spacing: 40) {
+                    Text("Belum terdapat tugas aktif.")
+                        .font(.custom("Inter-Regular_Bold", size: 18))
+                        .foregroundStyle(.black)
+                        .multilineTextAlignment(.center)
+                    Text("Silakan menghubungi Admin Logistik untuk mengonfirmasi pengiriman.")
+                        .font(.custom("Inter-Regular_Light", size: 14))
+                        .foregroundStyle(Color.greyText)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 40)
+//                    retryButton()
                 }
             }
         }

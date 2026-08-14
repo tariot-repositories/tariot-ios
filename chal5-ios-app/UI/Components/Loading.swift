@@ -12,4 +12,3 @@ struct LoadingView: View {
         ProgressView("Loading")
     }
 }
-

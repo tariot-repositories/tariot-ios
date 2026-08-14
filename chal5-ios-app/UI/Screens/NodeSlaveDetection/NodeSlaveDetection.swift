@@ -17,7 +17,6 @@ struct NodeSlaveDetection: View {
     var body: some View {
         Group {
             VStack {
-                
                 List(viewModel.slaveCodeList.enumerated(), id: \.offset) { _, code in
                     Text(code.slaveCode)
                 }

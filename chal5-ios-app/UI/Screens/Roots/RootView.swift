@@ -16,7 +16,15 @@ struct RootView: View {
             Group {
                 switch viewModel.state {
                 case .loading:
-                    LoadingView()
+                    VStack (spacing: 0) {
+                        Header()
+                        Spacer()
+                        LoadingView()
+                        Spacer()
+                    }
+                    .background(
+                        Color.veryLigthGreen
+                    )
                 case .deliveryNotAccepted(let order):
                     DeliveryOrderView(viewModel: DeliveryOrderViewModel(state: DeliveryOrderViewModel.State.loaded(order)))
                 case .nodeDetectionState(let order):

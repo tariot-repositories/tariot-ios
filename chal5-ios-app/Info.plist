@@ -4,11 +4,16 @@
 <dict>
 	<key>MQTT_HOST</key>
 	<string>$(MQTT_HOST)</string>
-	<key>MQTT_USERNAME</key>
-	<string>$(MQTT_USERNAME)</string>
 	<key>MQTT_PASSWORD</key>
 	<string>$(MQTT_PASSWORD)</string>
 	<key>MQTT_PORT</key>
 	<string>$(MQTT_PORT)</string>
+	<key>MQTT_USERNAME</key>
+	<string>$(MQTT_USERNAME)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>BricolageGrotesque.ttf</string>
+		<string>Inter.ttf</string>
+	</array>
 </dict>
 </plist>
