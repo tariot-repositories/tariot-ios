@@ -10,5 +10,7 @@ import SwiftUI
 struct LoadingView: View {
     var body: some View {
         ProgressView("Loading")
+            .tint(Color.gray)
+            .foregroundStyle(Color.gray)
     }
 }

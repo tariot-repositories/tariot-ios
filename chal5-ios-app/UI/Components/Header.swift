@@ -17,6 +17,7 @@ struct Header : View {
                 Text("BIKI ALERT")
                     .font(.custom("BricolageGrotesque-96ptExtraBold_Bold", size: 27))
                     .tracking(0.05)
+                    .foregroundStyle(Color.black)
             }
 
             Spacer()

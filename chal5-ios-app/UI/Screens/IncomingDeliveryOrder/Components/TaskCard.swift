@@ -20,7 +20,9 @@ struct TaskCard: View {
             HStack {
                 Text(code).font(
                     .custom("Inter-Regular_Bold", size: 24)
-                ).tracking(24 * 0.01)
+                )
+                .tracking(24 * 0.01)
+                .foregroundStyle(Color.black)
                 Spacer()
                 StatusBadge(text: badgeText, color: badgeColor)
             }
