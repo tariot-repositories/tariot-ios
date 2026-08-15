@@ -25,25 +25,20 @@ struct RootView: View {
                     .background(
                         Color.veryLigthGreen
                     )
-                case .deliveryNotAccepted(let order):
-                    DeliveryOrderView(viewModel: DeliveryOrderViewModel(state: DeliveryOrderViewModel.State.loaded(order)))
-                case .nodeDetectionState(let order):
+                case .noDelivery:
+                    DeliveryOrderView(viewModel: DeliveryOrderViewModel(deliveryOrder: viewModel.deliveryOrder))
+                case .deliveryNotAccepted:
+                    DeliveryOrderView(viewModel: DeliveryOrderViewModel(deliveryOrder: viewModel.deliveryOrder))
+                case .nodeDetectionState:
                     NodeSlaveDetection(
-                        viewModel: NodeSlaveDetectionViewModel(order: order)
+                        viewModel: NodeSlaveDetectionViewModel(order: viewModel.deliveryOrder!)
                     )
-                    
-                case .failed(let message):
-                    ErrorView(message: message, retryAction: {
-                        Task {
-                            await viewModel.loadActiveOrder()
-                        }
-                    })
                 default:
                     EmptyView()
                 }
             }
             .task {
-                await viewModel.loadActiveOrder()
+                await viewModel.refreshUntilGetActiveOrder()
             }
             .navigationDestination (for: Route.self) {
                 route in RouteDestinationView(route: route)

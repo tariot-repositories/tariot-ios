@@ -12,41 +12,58 @@ class RootViewModel: ObservableObject {
     @Published private(set) var state: DeliveryOrderState = .loading
     
     private let repository: DeliveryOrderRepository
-
+    
+    var deliveryOrder: DeliveryOrder?
+    
     init(repository: DeliveryOrderRepository = DeliveryOrderRepository()) {
         self.repository = repository
     }
 
-    func loadActiveOrder() async {
-        var deliveryOrder: DeliveryOrder?
+    func refreshUntilGetActiveOrder() async {
+        var isFirstTime: Bool = false
+        var response: DeliveryOrder?
         
-        do {
-            deliveryOrder = try await repository.fetchActiveOrder()
-        } catch {
-            state = .failed(error.localizedDescription)
-            return
+        while true {
+            do {
+                if isFirstTime {
+                    try await Task.sleep(for: .seconds(5))
+                }
+                isFirstTime = true
+
+                response = try await repository.fetchActiveOrder()
+                
+                guard let _ = response else {
+                    continue
+                }
+                
+                break
+            } catch {
+                continue
+            }
         }
             
-        guard let order = deliveryOrder else {
-            state = .deliveryNotAccepted(nil)
+        guard let order = response else {
+            state = .noDelivery
             return
         }
+        
+        self.deliveryOrder = order
         
         switch order.status {
         case "menunggu_konfirmasi_supir":
-            state = .deliveryNotAccepted(order)
+            state = .deliveryNotAccepted
         case "menunggu_deteksi_node":
-            state = .nodeDetectionState(order)
+            state = .nodeDetectionState
         case "dalam_perjalanan":
             state = .inDeliveryState
         default:
-            state = .deliveryNotAccepted(nil)
+            state = .noDelivery
         }
     }
 }
 
 extension RootViewModel {
     enum DeliveryOrderState {
-        case loading, deliveryNotAccepted(DeliveryOrder?), nodeDetectionState(DeliveryOrder), inDeliveryState, failed(String)
+        case loading, noDelivery, deliveryNotAccepted, nodeDetectionState, inDeliveryState
     }
 }

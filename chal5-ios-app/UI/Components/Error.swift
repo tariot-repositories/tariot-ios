@@ -17,12 +17,17 @@ struct ErrorView: View {
     }
     
     var body: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "exclamationmark.circle.fill")
-                .foregroundStyle(.red)
-            Text("Something went wrong: \(message)")
-            Button("Retry") {
-                retryAction()
+        ZStack {
+            Color.veryLigthGreen.ignoresSafeArea()
+            
+            VStack(spacing: 12) {
+                Image(systemName: "exclamationmark.circle.fill")
+                    .foregroundStyle(.red)
+                Text("Something went wrong:\n\(message)")
+                    .multilineTextAlignment(.center)
+                Button("Retry") {
+                    retryAction()
+                }
             }
         }
     }

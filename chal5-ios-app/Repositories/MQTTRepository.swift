@@ -38,8 +38,6 @@ final class MQTTRepository: NSObject {
             let client = CocoaMQTT(clientID: clientID, host: host, port: port)
             client.username = username
             client.password = password
-            client.enableSSL = true
-            client.manuallyEvaluateTrust = false // true hanya untuk broker self-signed/dev
             client.delegate = self
 
             self.mqtt = client

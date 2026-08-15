@@ -17,37 +17,37 @@ struct DeliveryOrderView: View {
     
     var body: some View {
         VStack (spacing: 0) {
-            
             Header()
-            
-            Spacer()
             
             content
                 .task {
-                    await viewModel.loadActiveOrder()
+                    await viewModel.refreshUntilGetActiveOrder()
                 }
-            Spacer()
             
+            Spacer()
+        }
+        .alert("Error", isPresented: $viewModel.isAcceptingDeliveryError) {
+            Button("Oke") {
+                viewModel.isAcceptingDeliveryError = false
+            }
+        } message: {
+            if let error = viewModel.acceptingDeliveryError {
+                Text("\(error.errorDescription) \(error.recoverySuggestion)")
+            } else {
+                Text("Terjadi kesalahan!")
+            }
         }
         .actionFooter {
             switch viewModel.state {
-            case .idle:
+            case .loadedButEmpty:
                 WaitingBikiButton()
-            case .loading:
-                WaitingBikiButton()
-            case .loaded(let deliveryOrder):
-                if deliveryOrder == nil {
-                    WaitingBikiButton()
-                } else {
-                    PrimaryActionButton(
-                        title: "Terima tugas", isLoading: viewModel.acceptingDeliveryState == DeliveryOrderViewModel.AcceptingDeliverState.acceptingDeliverOrder) {
-                            Task {
-                                await viewModel.acceptActiveOrder(order: deliveryOrder!)
-                            }
+            case .loaded:
+                PrimaryActionButton(
+                    title: "Terima tugas", isLoading: viewModel.isAcceptingDelivery) {
+                        Task {
+                            await viewModel.acceptActiveOrder()
                         }
-                }
-            case .failed(_):
-                WaitingBikiButton()
+                    }
             }
         }
         .background(
@@ -56,72 +56,62 @@ struct DeliveryOrderView: View {
     }
     
     @ViewBuilder var content: some View {
-        Group {
-            switch viewModel.state {
-            case .idle:
-                Color.clear
-            case .loading:
-                LoadingView()
-            case .loaded(let deliveryOrder):
-                loadedView(deliveryOrder)
-            case .failed(let message):
-                ErrorView(message: message, retryAction: retry)
-            }
-        }
-    }
-}
-
-// MARK: Loaded View
-private extension DeliveryOrderView {
-    func loadedView(_ order: DeliveryOrder?) -> some View {
-        Group {
-            if let order {
-                VStack(alignment: .leading, spacing: 8) {
-                    Spacer()
-                    
-                    Text("Order #\(order.id)")
-                        .font(.headline)
-                    Text("\(order.originLocation) → \(order.destinationLocation)")
-                    Text("Status: \(order.status)")
-                    
-                    Spacer()
-                    
-                    retryButton()
-                    
-                    Spacer()
-                }
-                .padding()
-                .onChange(of: viewModel.acceptingDeliveryState) { _, newState in
-                    if newState == .detectionNodePhase {
-                        Router.shared.push(.nodeDetection(order))
-                    }
-                }
-            } else {
-                VStack(alignment: .center, spacing: 40) {
-                    Text("Belum terdapat tugas aktif.")
-                        .font(.custom("Inter-Regular_Bold", size: 18))
-                        .foregroundStyle(.black)
-                        .multilineTextAlignment(.center)
-                    Text("Silakan menghubungi Admin Logistik untuk mengonfirmasi pengiriman.")
-                        .font(.custom("Inter-Regular_Light", size: 14))
-                        .foregroundStyle(Color.greyText)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 40)
-                }
-            }
-        }
-    }
-}
-
-// MARK: Util
-private extension DeliveryOrderView {
-    func retryButton() -> some View {
-        Button("Retry") {
-            retry()
+        switch viewModel.state {
+        case .loadedButEmpty:
+            loadedViewButEmpty
+        case .loaded:
+            loadedView
         }
     }
     
-    func retry() {
-        Task { await viewModel.loadActiveOrder() }
+}
+
+// MARK: Loaded View but Empty
+private extension DeliveryOrderView {
+    @ViewBuilder var loadedViewButEmpty: some View {
+        Spacer()
+        
+        VStack(spacing: 40) {
+            Text("Belum terdapat tugas aktif.")
+                .font(.custom("Inter-Regular_Bold", size: 18))
+                .foregroundStyle(.black)
+                .multilineTextAlignment(.center)
+            Text("Silakan menghubungi Admin Logistik untuk mengonfirmasi pengiriman.")
+                .font(.custom("Inter-Regular_Light", size: 14))
+                .foregroundStyle(Color.greyText)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+        }
+    }
+}
+    
+
+
+// MARK: Loaded View
+private extension DeliveryOrderView {
+    @ViewBuilder var loadedView: some View {
+        VStack(spacing: 16) {
+            TaskCard(
+                code: "BIKI-04",
+                badgeText: "TUGAS BARU",
+                badgeColor: .green,
+                originTitle: viewModel.deliveryOrder?.originLocation ?? "Unknown",
+                destinationTitle: viewModel.deliveryOrder?.destinationLocation ?? "Unknown",
+                stats: [
+                    StatItem(label: "BERANGKAT", value: "06:00"),
+                    StatItem(label: "ESTIMASI", value: "09:10"),
+                    StatItem(label: "NODE", value: viewModel.deliveryOrder?.masterCode.uppercased() ?? "MST-03")
+                ]
+            )
+            
+            InfoBanner(
+                title: "SEBELUM BERANGKAT",
+                message: "Sebelum melakukan keberangkatan, pastikan semua keranjang buah telah masuk ke dalam bak truk dalam posisi menyala.",
+                titleColor: Color.infoBannerTitle,
+                backgroundColor: Color.infoBannerBackground)
+            
+            Spacer()
+        }
+        .padding(.horizontal, 24)
     }
 }
