@@ -8,6 +8,30 @@
 import Combine
 import Foundation
 
+//enum ConfirmingSlaveError: LocalizedError {
+//    case noEnoughSlaves
+//    case submitFailed
+//    
+//    var errorDescription: String {
+//        switch self {
+//        case .noEnoughSlaves:
+//            return "Tidak ada pesanan yang bisa diterima"
+//        default:
+//            return "Ups, terjadi kesalahan!"
+//        }
+//    }
+//    
+//    var recoverySuggestion: String {
+//        switch self {
+//        case .noEnoughSlaves:
+//            return "Silahkan tunggu hingga semua-nya sudah terdeteksi"
+//        default:
+//            return "Silahkan coba lagi dalam beberapa saat"
+//        }
+//    }
+//}
+
+
 final class NodeSlaveDetectionViewModel: ObservableObject {
     @Published private(set) var slaveCodeList: [SlaveData] = []
     var slaveCodeSet: Set<String> = Set<String>()
@@ -60,8 +84,6 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
     
     func submitDetectedSlave () {
         stop()
-        
-        
     }
     
     func stop() {
