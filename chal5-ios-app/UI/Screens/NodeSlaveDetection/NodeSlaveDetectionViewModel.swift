@@ -101,7 +101,7 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
         }
         
         let detectedSlaves: DetectedSlaves = DetectedSlaves(
-            deliveryId: deliveryOrder.id, masterCode: deliveryOrder.masterCode, truckId: deliveryOrder.truckId, detectedSlaves: slaveCodeList, createdBy: deliveryOrder.createdBy)
+            deliveryId: deliveryOrder.id, masterCode: deliveryOrder.masterCode, detectedSlaves: slaveCodeList)
         
         do {
             try await submitRepository.submitDetectedSlave(detectedSlaves: detectedSlaves)
