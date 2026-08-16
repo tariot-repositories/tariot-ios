@@ -34,7 +34,7 @@ struct StatusBar : View {
             
             Spacer()
             
-            StatusBadge(text: "BELUM JALAN", color: Color.greyButtonText)
+            StatusBadge(text: "BELUM JALAN", color: Color.darkGray, background: .waitingBikiButton)
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 15)

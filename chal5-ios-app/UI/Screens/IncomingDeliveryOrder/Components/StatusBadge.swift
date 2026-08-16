@@ -9,6 +9,7 @@ import SwiftUI
 struct StatusBadge: View {
     let text: String
     let color: Color
+    let background: Color
 
     var body: some View {
         HStack(spacing: 6) {
@@ -24,7 +25,7 @@ struct StatusBadge: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
-        .background(color.opacity(0.15))
+        .background(background)
         .clipShape(Capsule())
     }
 }

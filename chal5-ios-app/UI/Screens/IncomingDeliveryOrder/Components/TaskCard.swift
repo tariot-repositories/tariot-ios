@@ -24,7 +24,7 @@ struct TaskCard: View {
                 .tracking(24 * 0.01)
                 .foregroundStyle(Color.black)
                 Spacer()
-                StatusBadge(text: badgeText, color: badgeColor)
+                StatusBadge(text: badgeText, color: badgeColor, background: badgeColor.opacity(0.15))
             }
 
             RouteTimelineView(
