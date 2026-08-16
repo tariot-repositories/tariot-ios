@@ -35,13 +35,29 @@ struct NodeSlaveDetection: View {
                 Spacer()
             }
             .task {
-                
+                await viewModel.start()
+            }
+            .onDisappear {
+                viewModel.stop()
             }
             .actionFooter {
                 PrimaryActionButton(
-                    title: "Konfirmasi Berangkat", isLoading: false) {
-                        
+                    title: "Konfirmasi Berangkat", isLoading: viewModel.isConfirmingSlaves) {
+                        Task {
+                            await viewModel.submitDetectedSlave()
+                        }
                     }
+            }
+            .alert("Error", isPresented: $viewModel.isConfirmingSlavesError) {
+                Button("Oke") {
+                    viewModel.isConfirmingSlavesError = false
+                }
+            } message: {
+                if let error = viewModel.confirmingSlavesError {
+                    Text("\(error.errorDescription)\n\(error.recoverySuggestion)")
+                } else {
+                    Text("Terjadi kesalahan!")
+                }
             }
             .background(
                 Color.veryLigthGreen
@@ -162,7 +178,7 @@ extension NodeSlaveDetection {
         viewModel: NodeSlaveDetectionViewModel(
             order: DeliveryOrder(
                 id: 1042,
-                masterCode: "m1s1",
+                masterCode: "m1",
                 slaveCounts: 2,
                 truckId: 1,
                 originLocation: "Jakarta Warehouse A",

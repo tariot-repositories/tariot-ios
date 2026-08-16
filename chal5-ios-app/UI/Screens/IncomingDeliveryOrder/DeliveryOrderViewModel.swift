@@ -33,8 +33,8 @@ enum AcceptingDeliverError: LocalizedError {
 
 final class DeliveryOrderViewModel: ObservableObject {
     @Published private(set) var state: DeliveryOrderState
+    
     @Published private(set) var isAcceptingDelivery: Bool = false
-
     @Published var isAcceptingDeliveryError: Bool = false
     var acceptingDeliveryError: AcceptingDeliverError? = nil
     
