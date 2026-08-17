@@ -38,12 +38,11 @@ final class DeliveryOrderViewModel: ObservableObject {
     @Published var isAcceptingDeliveryError: Bool = false
     var acceptingDeliveryError: AcceptingDeliverError? = nil
     
-    private let repository: DeliveryOrderRepository
+    private let repository: DeliveryOrderRepository = DeliveryOrderRepository.shared
     
     var deliveryOrder: DeliveryOrder?
 
-    init(repository: DeliveryOrderRepository = DeliveryOrderRepository(), deliveryOrder: DeliveryOrder?) {
-        self.repository = repository
+    init(deliveryOrder: DeliveryOrder?) {
         self.deliveryOrder = deliveryOrder
         
         if deliveryOrder == nil {

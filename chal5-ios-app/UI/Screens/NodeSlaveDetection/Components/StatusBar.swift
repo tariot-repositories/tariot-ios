@@ -2,6 +2,14 @@
 //  StatusBar.swift
 //  chal5-ios-app
 //
+//  Created by Danniel on 17/08/26.
+//
+
+
+//
+//  StatusBar.swift
+//  chal5-ios-app
+//
 //  Created by Danniel on 16/08/26.
 //
 

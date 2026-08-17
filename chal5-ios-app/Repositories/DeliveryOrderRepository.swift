@@ -8,6 +8,8 @@
 import Foundation
 
 final class DeliveryOrderRepository {
+    static let shared = DeliveryOrderRepository()
+    
     private let baseURL = URL(string: "http://127.0.0.1:8000")!
     private let session: URLSession
     private let decoder: JSONDecoder

@@ -1,0 +1,39 @@
+//
+//  AlertApiRepository.swift
+//  chal5-ios-app
+//
+//  Created by Danniel on 17/08/26.
+//
+
+import Foundation
+
+final class AlertsAPIRepository {
+    static let shared: AlertsAPIRepository = AlertsAPIRepository()
+    
+    private let baseURL = URL(string: "http://127.0.0.1:8000")!
+    private let session: URLSession
+    private let decoder: JSONDecoder
+    
+    init(session: URLSession = .shared) {
+        self.session = session
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        self.decoder = decoder
+    }
+    
+    func fetchAlerts(id: UUID) async throws -> [Alert] {
+        let url = baseURL.appendingPathComponent("alerts/\(id.uuidString)")
+        let (data, response) = try await session.data(from: url)
+        
+        guard let http = response as? HTTPURLResponse else {
+            throw APIError.badResponse
+        }
+        
+        switch http.statusCode {
+        case 200..<300:
+            return try decoder.decode([Alert].self, from: data)
+        default:
+            throw APIError.badResponse
+        }
+    }
+}

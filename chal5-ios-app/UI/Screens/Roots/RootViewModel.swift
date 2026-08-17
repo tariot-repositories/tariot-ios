@@ -11,13 +11,9 @@ import Foundation
 class RootViewModel: ObservableObject {
     @Published private(set) var state: DeliveryOrderState = .loading
     
-    private let repository: DeliveryOrderRepository
+    private let repository: DeliveryOrderRepository = DeliveryOrderRepository.shared
     
     var deliveryOrder: DeliveryOrder?
-    
-    init(repository: DeliveryOrderRepository = DeliveryOrderRepository()) {
-        self.repository = repository
-    }
 
     func refreshUntilGetActiveOrder() async {
         var isFirstTime: Bool = false
