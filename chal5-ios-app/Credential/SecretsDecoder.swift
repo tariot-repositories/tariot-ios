@@ -8,9 +8,9 @@
 import Foundation
 
 enum Secrets {
-    static let myTruckId: UUID = UUID(uuidString: "cef46e10-2ca0-4743-bce5-2ce9bf36aa36")!
-    static let slaveCount: Int = 2
-    static let masterCode: String = "m1"
+    static var myTruckId: UUID = UUID(uuidString: "cef46e10-2ca0-4743-bce5-2ce9bf36aa36")!
+    static var slaveCount: Int = 2
+    static var masterCode: String = "m1"
 
     static var mqttHost: String {
         guard let key = Bundle.main.infoDictionary?["MQTT_HOST"] as? String else {

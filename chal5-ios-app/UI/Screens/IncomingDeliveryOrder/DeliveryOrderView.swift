@@ -85,8 +85,6 @@ private extension DeliveryOrderView {
     }
 }
     
-
-
 // MARK: Loaded View
 private extension DeliveryOrderView {
     @ViewBuilder var loadedView: some View {

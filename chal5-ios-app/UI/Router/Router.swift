@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 enum Route: Hashable {
+    case root
     case nodeDetection(DeliveryOrder)
     case inDelivery(DeliveryOrder)
     case complete(DeliveryOrder)
@@ -43,6 +44,8 @@ struct RouteDestinationView: View {
     
     var body: some View {
         switch route {
+        case .root:
+            RootView()
         case .nodeDetection(let order):
             NodeSlaveDetection(
                 viewModel: NodeSlaveDetectionViewModel(order: order)
