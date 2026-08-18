@@ -18,7 +18,5 @@ enum Mock {
         createdBy: 1,
         createdAt: Date.now.description,
         completedAt: nil,
-        startedAt: nil
     )
-
 }

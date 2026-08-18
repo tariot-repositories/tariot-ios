@@ -18,7 +18,7 @@ struct OnDeliveryView: View {
         VStack (spacing: 0) {
             Header()
             
-            OnGoingStatusBar(originLocation: viewModel.deliveryOrder.originLocation, destinationLocation: viewModel.deliveryOrder.destinationLocation, dateStart: Date.from(descriptionString: viewModel.deliveryOrder.createdAt))
+            OnGoingStatusBar(originLocation: viewModel.deliveryOrder.originLocation, destinationLocation: viewModel.deliveryOrder.destinationLocation, dateStart: UserDefaultRepository.shared.getOnDeliveryDate())
                 .padding(.horizontal, 20)
             
             ScrollView {
@@ -57,14 +57,15 @@ struct OnDeliveryView: View {
             
             Spacer()
         }
-        
         .actionFooter {
             PrimaryActionButton(
-                title: "Selesaikan perjalanan", isLoading: false
+                title: "Selesaikan perjalanan", isLoading: viewModel.isFinishOnDelivery
             ) {
-                
+                viewModel.alertType = .areYouSure
+                viewModel.showAlert = true
             }
         }
+        .navigationBarBackButtonHidden(true)
         .task {
             viewModel.startPolling()
         }
@@ -74,6 +75,34 @@ struct OnDeliveryView: View {
         .background(
             Color.veryLigthGreen
         )
+        .alert(viewModel.alertType == .areYouSure ? "Yakin ingin menyelesaikan perjalanan?" : "Terjadi kesalahan", isPresented: $viewModel.showAlert) {
+            switch viewModel.alertType {
+            case .areYouSure:
+                Button("Selesaikan Perjalanan", role: .confirm) {
+                    Task {
+                        await viewModel.finishDeliveryOrder()
+                    }
+                }
+                .keyboardShortcut(.defaultAction)
+
+                Button("Batalkan Tindakan", role: .cancel) {
+                    
+                }
+            case .finishOnDeliveryError:
+                Button("Oke") {
+                    
+                }
+            }
+            
+        } message: {
+            switch viewModel.alertType {
+            case .areYouSure:
+                Text("Pastikan anda telah sampai di titik pengantaran yang tepat.")
+            case .finishOnDeliveryError:
+                Text("\(viewModel.finishOnDeliveryError.errorDescription)\n\(viewModel.finishOnDeliveryError.recoverySuggestion)")
+                
+            }
+        }
     }
 }
 

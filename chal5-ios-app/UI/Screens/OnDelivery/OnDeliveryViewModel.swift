@@ -8,6 +8,29 @@
 import Combine
 import SwiftUI
 
+enum FinishOnDeliveryError: LocalizedError {
+    case submitFailed
+    
+    var errorDescription: String {
+        switch self {
+        default:
+            return "Ups, terjadi kesalahan!"
+        }
+    }
+    
+    var recoverySuggestion: String {
+        switch self {
+        default:
+            return "Silahkan coba lagi dalam beberapa saat"
+        }
+    }
+}
+
+enum OnDeliveryAlertType {
+    case areYouSure
+    case finishOnDeliveryError
+}
+
 // MARK: - ViewModel
 final class OnDeliveryViewModel: ObservableObject {
     @Published private(set) var alerts: [Alert] = []
@@ -19,7 +42,15 @@ final class OnDeliveryViewModel: ObservableObject {
     private var missCounts: [UUID: Int] = [:]
     private let maxMissesBeforeRemoval = 2
 
+    @Published var showAlert: Bool = false
+    
+    var alertType: OnDeliveryAlertType = .finishOnDeliveryError
+    
+    @Published private(set) var isFinishOnDelivery: Bool = false
+    var finishOnDeliveryError: FinishOnDeliveryError = .submitFailed
+    
     private let api: AlertsAPIRepository = AlertsAPIRepository.shared
+    private let finishRepository: FinishDeliveryOrderRepository = FinishDeliveryOrderRepository.shared
     
     init (deliveryOrder: DeliveryOrder) {
         self.deliveryOrder = deliveryOrder
@@ -100,5 +131,34 @@ final class OnDeliveryViewModel: ObservableObject {
         withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
             self.alerts = next
         }
+    }
+}
+
+// MARK: Finish Delivery Order
+extension OnDeliveryViewModel {
+    func finishDeliveryOrder() async {
+        if isFinishOnDelivery {
+            return
+        }
+        
+        isFinishOnDelivery = true
+        
+        var newOrder: DeliveryOrder
+        do {
+            newOrder = try await finishRepository.finishDeliveryOrder(order: deliveryOrder)
+        } catch {
+            finishOnDeliveryError = .submitFailed
+            
+            alertType = .finishOnDeliveryError
+
+            showAlert = true
+            
+            isFinishOnDelivery = false
+        
+            return
+        }
+        
+        isFinishOnDelivery = false
+        Router.shared.push(.complete(newOrder))
     }
 }

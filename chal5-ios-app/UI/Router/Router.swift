@@ -11,7 +11,7 @@ import Combine
 enum Route: Hashable {
     case nodeDetection(DeliveryOrder)
     case inDelivery(DeliveryOrder)
-    case complete
+    case complete(DeliveryOrder)
 }
 
 
@@ -39,9 +39,11 @@ struct RouteDestinationView: View {
             NodeSlaveDetection(
                 viewModel: NodeSlaveDetectionViewModel(order: order)
             )
-        case .inDelivery(_):
-            EmptyView()
-        case .complete:
+        case .inDelivery(let order):
+            OnDeliveryView(
+                viewModel: OnDeliveryViewModel(deliveryOrder: order)
+            )
+        case .complete(let order):
             EmptyView()
         }
     }

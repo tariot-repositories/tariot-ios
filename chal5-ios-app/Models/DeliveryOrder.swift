@@ -17,7 +17,6 @@ struct DeliveryOrder: Codable, Hashable {
     let createdBy: Int
     let createdAt: String
     let completedAt: String?
-    let startedAt: String?
 }
 
 enum DeliveryStatus: String, Codable {
