@@ -33,7 +33,21 @@ final class DeliveryOrderRepository {
         case 204:
             return nil
         case 200..<300:
-            return try decoder.decode(DeliveryOrder.self, from: data)
+            let deliveryOrders = try decoder.decode([DeliveryOrder].self, from: data)
+            
+            let sortedOrders = deliveryOrders
+                .map { order in (order, Date.from(descriptionString: order.departureScheduledAt)) }
+                .sorted { $0.1 < $1.1 }
+                .map { $0.0 }
+            
+            for order in sortedOrders {
+                if order.status != .selesai {
+                    return order
+                }
+            }
+
+            return nil
+            
         default:
             throw APIError.badResponse
         }

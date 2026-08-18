@@ -28,6 +28,14 @@ final class Router: ObservableObject {
         guard !path.isEmpty else { return }
         path.removeLast()
     }
+    
+    func popToRoot() {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            path.removeLast(path.count)
+        }
+    }
 }
 
 struct RouteDestinationView: View {
@@ -42,9 +50,11 @@ struct RouteDestinationView: View {
         case .inDelivery(let order):
             OnDeliveryView(
                 viewModel: OnDeliveryViewModel(deliveryOrder: order)
-            )
+            ).task {
+                UserDefaultRepository.shared.setOnDeliveryDate(Date.now)
+            }
         case .complete(let order):
-            EmptyView()
+            FinishScreen(deliveryOrder: order)
         }
     }
 }

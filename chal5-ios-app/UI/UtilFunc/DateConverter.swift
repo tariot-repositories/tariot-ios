@@ -13,6 +13,29 @@ func formatTime(from date: Date) -> String {
     return formatter.string(from: date)
 }
 
+func calculateElapsedTime(dateStart: Date) -> String {
+    let diffInSeconds = Date().timeIntervalSince(dateStart)
+    let totalMinutes = max(0, Int(diffInSeconds / 60))
+    
+    let hours = totalMinutes / 60
+    let minutes = totalMinutes % 60
+    
+    var elapsedTimeText: String
+    
+    if hours > 0 {
+        if minutes > 0 {
+            elapsedTimeText = "\(hours)j \(minutes)m"
+        } else {
+            elapsedTimeText = "\(hours)j"
+        }
+    } else {
+        elapsedTimeText = "\(minutes)m"
+    }
+    
+    return elapsedTimeText
+}
+
+
 extension Date {
     /// Parses a string produced by `Date.description` / `NSDate.description`,
     /// e.g. "2026-08-18 01:23:45 +0000", back into a `Date`.
