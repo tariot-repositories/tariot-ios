@@ -11,11 +11,10 @@ struct NodeSlaveDetection: View {
     @ObservedObject var viewModel: NodeSlaveDetectionViewModel
     @State private var isExpanded: Bool = false
     
-    let totalCount: Int
+    let totalCount: Int = Secrets.slaveCount
     
     init(viewModel: NodeSlaveDetectionViewModel) {
         self.viewModel = viewModel
-        self.totalCount = viewModel.deliveryOrder.slaveCounts
     }
     
     var body: some View {
@@ -26,7 +25,7 @@ struct NodeSlaveDetection: View {
                 StatusBar(
                     originLocation: viewModel.deliveryOrder.originLocation,
                     destinationLocation: viewModel.deliveryOrder.destinationLocation,
-                    dateStart: viewModel.deliveryOrder.departureScheduledAt
+                    dateStart: Date.from(descriptionString: viewModel.deliveryOrder.departureScheduledAt)
                 )
                 
                 content
@@ -176,20 +175,7 @@ extension NodeSlaveDetection {
 #Preview {
     NodeSlaveDetection(
         viewModel: NodeSlaveDetectionViewModel(
-            order: DeliveryOrder(
-                id: 1042,
-                masterCode: "m1",
-                slaveCounts: 2,
-                truckId: 1,
-                originLocation: "Jakarta Warehouse A",
-                destinationLocation: "Bandung Distribution Hub B",
-                departureScheduledAt: Date(),
-                estimatedArrivalAt: Date().addingTimeInterval(4 * 3600),
-                status: "in_transit",
-                createdAt: Date().addingTimeInterval(-1800),
-                completedAt: nil,
-                createdBy: 108
-            )
+            order: Mock.deliveryOrder
         )
     )
 }

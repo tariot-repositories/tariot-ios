@@ -59,7 +59,7 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
     }
     
     func start() async {
-        let base_topic: String = deliveryOrder.masterCode
+        let base_topic: String = Secrets.masterCode
         while true {
             do {
                 try await repository.connect()
@@ -71,7 +71,7 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
                         guard let data = message.payload.data(using: .utf8) else { continue }
                         do {
                             let decodedData = try decoder.decode(SlaveData.self, from: data)
-                            if Int(Date.now.timeIntervalSince1970) - decodedData.secondSinceEpoch < 2 {
+                            if Int64(Date.now.timeIntervalSince1970) - decodedData.secondSinceEpoch < 2 {
                                 if slaveCodeSet.contains(decodedData.slaveCode) == false {
                                     slaveCodeSet.insert(decodedData.slaveCode)
                                     slaveCodeList.append(decodedData)
@@ -93,7 +93,7 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
     func submitDetectedSlave () async {
         isConfirmingSlaves = true
         
-        if slaveCodeList.count != deliveryOrder.slaveCounts {
+        if slaveCodeList.count != Secrets.slaveCount {
             isConfirmingSlavesError = true
             confirmingSlavesError = .noEnoughSlaves
             isConfirmingSlaves = false
@@ -101,10 +101,12 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
         }
         
         let detectedSlaves: DetectedSlaves = DetectedSlaves(
-            deliveryId: deliveryOrder.id, masterCode: deliveryOrder.masterCode, detectedSlaves: slaveCodeList)
+            deliveryId: deliveryOrder.id, masterCode: Secrets.masterCode, detectedSlaves: slaveCodeList)
+        
+        let newDeliveryOrder: DeliveryOrder
         
         do {
-            try await submitRepository.submitDetectedSlave(detectedSlaves: detectedSlaves)
+            newDeliveryOrder = try await submitRepository.submitDetectedSlave(detectedSlaves: detectedSlaves)
             isConfirmingSlaves = false
         } catch {
             isConfirmingSlavesError = true
@@ -113,7 +115,7 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
             return
         }
         
-        Router.shared.push(.inDelivery(deliveryOrder))
+        Router.shared.push(.inDelivery(newDeliveryOrder))
     }
     
     func stop() {

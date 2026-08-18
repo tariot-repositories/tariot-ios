@@ -100,7 +100,7 @@ private extension DeliveryOrderView {
                 stats: [
                     StatItem(label: "BERANGKAT", value: "06:00"),
                     StatItem(label: "ESTIMASI", value: "09:10"),
-                    StatItem(label: "NODE", value: viewModel.deliveryOrder?.masterCode.uppercased() ?? "MST-03")
+                    StatItem(label: "NODE", value: Secrets.masterCode.uppercased())
                 ]
             )
             

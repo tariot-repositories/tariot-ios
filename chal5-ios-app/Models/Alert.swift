@@ -18,14 +18,14 @@ enum AlertParameter: String, Decodable {
     case ethylene
 }
 
-struct Alert: Decodable {
+struct Alert: Decodable, Identifiable {
     let id: UUID
+    let slaveCode: String
     let truckUUID: UUID
     let readingID: UUID
-    let readingRecordedAt: Date
     let parameter: AlertParameter
     let severity: AlertSeverity
     let valueAtTrigger: Double
     let message: String
-    let createdAt: Date
+    let createdAt: String
 }

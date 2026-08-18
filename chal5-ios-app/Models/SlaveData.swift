@@ -7,7 +7,7 @@
 
 struct SlaveData: Codable {
     let slaveCode: String
-    let secondSinceEpoch: Int
+    let secondSinceEpoch: Int64
     
     enum CodingKeys: String, CodingKey {
         case slaveCode = "slave_code"

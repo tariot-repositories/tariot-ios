@@ -8,16 +8,14 @@ import SwiftUI
 
 struct AlertCard: View {
     let alert: Alert
-    let truckCode: String
     let thresholdLabel: String?
     let isExpanded: Bool
     let onToggle: () -> Void
     
     let unitLabel: String
     
-    init (alert: Alert, truckCode: String, thresholdLabel: String? = nil, isExpanded: Bool, onToggle: @escaping () -> Void) {
+    init (alert: Alert, thresholdLabel: String? = nil, isExpanded: Bool, onToggle: @escaping () -> Void) {
         self.alert = alert
-        self.truckCode = truckCode
         self.thresholdLabel = thresholdLabel
         self.isExpanded = isExpanded
         self.onToggle = onToggle
@@ -34,10 +32,11 @@ struct AlertCard: View {
     
     var body: some View {
         Button(action: onToggle) {
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 0) {
                 topRow
+                    .padding(.bottom, 14)
                 codeRow
-                
+                    .padding(.bottom, 8)
                 if isExpanded {
                     expandedContent
                 }
@@ -74,7 +73,7 @@ struct AlertCard: View {
             
             Spacer()
             
-            Text("Terdeteksi \(formatTime(from: alert.readingRecordedAt))")
+            Text("Terdeteksi \(formatTime(from: Date.from(descriptionString: alert.createdAt)))")
                 .font(
                     .custom("Inter-Regular_SemiBold", size: 14)
                 )
@@ -85,7 +84,7 @@ struct AlertCard: View {
     // MARK: Row 2 — truck code + expand/collapse chevron (always visible)
     private var codeRow: some View {
         HStack {
-            Text(truckCode)
+            Text(alert.slaveCode.uppercased())
                 .font(
                     .custom("Inter-Regular_Bold", size: 14)
                 )
@@ -105,7 +104,7 @@ struct AlertCard: View {
     private var expandedContent: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Text("\(String(format: "%.1f", alert.valueAtTrigger))\(unitLabel)")
+                Text("\(String(format: "%.1f", alert.valueAtTrigger)) \(unitLabel)")
                     .font(
                         .custom("Inter-Regular_Bold", size: 32)
                     )
@@ -134,21 +133,20 @@ struct contoh: View {
     @State var isExpandedHumid: Bool = true
     @State var alert: Alert = Alert(
         id: UUID(),
+        slaveCode: "m1s1",
         truckUUID: UUID(),
         readingID: UUID(),
-        readingRecordedAt: Date(),
         parameter: .temperature,
         severity: .critical,
         valueAtTrigger: 17.3,
         message: "Suhu terlalu tinggi. Cek penutup box pendingin.",
-        createdAt: Date()
+        createdAt: Date.now.description
     )
     
     var body: some View {
         VStack(spacing: 14) {
             AlertCard(
                 alert: alert,
-                truckCode: "KRT - C04",
                 isExpanded: isExpandedTemp,
                 onToggle: {
                     withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
@@ -160,16 +158,15 @@ struct contoh: View {
             AlertCard(
                 alert: Alert(
                     id: UUID(),
+                    slaveCode: "m1s2",
                     truckUUID: UUID(),
                     readingID: UUID(),
-                    readingRecordedAt: Date(),
                     parameter: .humidity,
                     severity: .warning,
                     valueAtTrigger: 88,
                     message: "Kelembaban di luar batas normal.",
-                    createdAt: Date()
+                    createdAt: Date.now.description
                 ),
-                truckCode: "KRT - C04",
                 thresholdLabel: nil,
                 isExpanded: isExpandedHumid,
                 onToggle: {

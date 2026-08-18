@@ -37,7 +37,6 @@ enum AlertStatus {
 
 struct StatusBanner: View {
     let status: AlertStatus
-    let message: String
     let updatedAt: Date
 
     var body: some View {
@@ -54,7 +53,7 @@ struct StatusBanner: View {
                     .tracking(0.03 * 14)
                     .padding(.bottom, 10)
 
-                Text(message)
+                Text(status == .safe ? "Kondisi keranjang buah berada dalam rentang batas normal." : "Terdeteksi kondisi keranjang berada di luar rentang batas normal.")
                     .font(.custom("Inter-Regular_Medium", size: 12))
                     .foregroundColor(.black)
                     .tracking(0.03 * 12)
@@ -99,13 +98,11 @@ struct StatusBannerPreview: View {
         VStack(spacing: 16) {
             StatusBanner(
                 status: .safe,
-                message: "Kondisi keranjang buah berada dalam rentang batas normal.",
                 updatedAt: Date.now
             )
 
             StatusBanner(
                 status: .needsAction,
-                message: "Terdeteksi kondisi keranjang berada di luar rentang batas normal.",
                 updatedAt: Date.now
             )
         }

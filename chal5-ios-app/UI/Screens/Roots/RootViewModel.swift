@@ -28,10 +28,6 @@ class RootViewModel: ObservableObject {
 
                 response = try await repository.fetchActiveOrder()
                 
-                guard let _ = response else {
-                    continue
-                }
-                
                 break
             } catch {
                 continue
@@ -46,11 +42,11 @@ class RootViewModel: ObservableObject {
         self.deliveryOrder = order
         
         switch order.status {
-        case "menunggu_konfirmasi_supir":
+        case .menungguKonfirmasiSupir:
             state = .deliveryNotAccepted
-        case "menunggu_deteksi_node":
+        case .menungguDeteksiNode:
             state = .nodeDetectionState
-        case "dalam_perjalanan":
+        case .dalamPerjalanan:
             state = .inDeliveryState
         default:
             state = .noDelivery

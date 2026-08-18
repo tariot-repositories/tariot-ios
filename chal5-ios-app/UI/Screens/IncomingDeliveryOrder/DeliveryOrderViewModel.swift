@@ -80,9 +80,9 @@ final class DeliveryOrderViewModel: ObservableObject {
         state = .loaded
         
         switch activeOrder.status {
-        case "menunggu_deteksi_node":
+        case .menungguDeteksiNode:
             Router.shared.push(.nodeDetection(activeOrder))
-        case "dalam_perjalanan":
+        case .dalamPerjalanan:
             Router.shared.push(.inDelivery(activeOrder))
         default:
             break
@@ -111,8 +111,10 @@ final class DeliveryOrderViewModel: ObservableObject {
             return
         }
         
+        let newOrder: DeliveryOrder
+        
         do {
-            try await repository.acceptActiveOrder(order: order)
+            newOrder = try await repository.acceptActiveOrder(order: order)
             isAcceptingDelivery = false
         } catch {
             isAcceptingDeliveryError = true
@@ -121,7 +123,7 @@ final class DeliveryOrderViewModel: ObservableObject {
             return
         }
         
-        Router.shared.push(.nodeDetection(order))
+        Router.shared.push(.nodeDetection(newOrder))
     }
 }
 

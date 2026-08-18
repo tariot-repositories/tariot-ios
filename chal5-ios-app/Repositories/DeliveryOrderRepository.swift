@@ -22,13 +22,13 @@ final class DeliveryOrderRepository {
     }
 
     func fetchActiveOrder() async throws -> DeliveryOrder? {
-        let url = baseURL.appendingPathComponent("tasks/get-delivery-task")
+        let url = baseURL.appendingPathComponent("deliveries/truck/\(Secrets.myTruckId.uuidString.lowercased())")
         let (data, response) = try await session.data(from: url)
 
         guard let http = response as? HTTPURLResponse else {
             throw APIError.badResponse
         }
-
+        
         switch http.statusCode {
         case 204:
             return nil
@@ -39,22 +39,25 @@ final class DeliveryOrderRepository {
         }
     }
     
-    func acceptActiveOrder(order: DeliveryOrder) async throws -> Void {
-        
-        let url = baseURL.appendingPathComponent("tasks/accept-delivery-task")
+    func acceptActiveOrder(order: DeliveryOrder) async throws -> DeliveryOrder {
+        let url = baseURL.appendingPathComponent("deliveries/\(order.id)/status")
         var request = URLRequest(url: url)
         
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(order)
+        var copy: DeliveryOrder = order
+        copy.status = .menungguDeteksiNode
         
-        let (_, response) = try await session.data(for: request)
+        request.httpMethod = "PATCH"
+        request.httpBody = try? JSONEncoder().encode(copy)
+        
+        let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw APIError.badResponse
         }
 
         switch http.statusCode {
-        case 201:
-            return // Success
+        case 200..<300:
+            return try decoder.decode(DeliveryOrder.self, from: data)
+
         default:
             throw APIError.badResponse
         }

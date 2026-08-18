@@ -22,21 +22,21 @@ final class NodeDetectionRepository {
         self.decoder = decoder
     }
     
-    func submitDetectedSlave(detectedSlaves: DetectedSlaves) async throws -> Void {
+    func submitDetectedSlave(detectedSlaves: DetectedSlaves) async throws -> DeliveryOrder {
         let url = baseURL.appendingPathComponent("detect-slaves/submit-detected-slave")
         var request = URLRequest(url: url)
         
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(detectedSlaves)
         
-        let (_, response) = try await session.data(for: request)
+        let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw APIError.badResponse
         }
         
         switch http.statusCode {
         case 200..<300:
-            break
+            return try decoder.decode(DeliveryOrder.self, from: data)
         default:
             throw APIError.badResponse
         }

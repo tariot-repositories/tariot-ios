@@ -8,74 +8,24 @@
 import Combine
 import SwiftUI
 
-extension AlertParameter {
-    var label: String {
-        switch self {
-        case .temperature: return "Suhu"
-        case .humidity: return "Kelembaban"
-        case .ethylene: return "Gas Etilen"
-        }
-    }
-
-    var unit: String {
-        switch self {
-        case .temperature: return "°C"
-        case .humidity: return "%"
-        case .ethylene: return "ppm"
-        }
-    }
-
-    var tagColor: Color {
-        Color(red: 0.98, green: 0.85, blue: 0.83)
-    }
-}
-
-extension AlertSeverity {
-    var dotColor: Color {
-        switch self {
-        case .critical: return Color.danger
-        case .warning: return Color.orangeWarning
-        }
-    }
-    
-    var tagBgColor: Color {
-        switch self {
-        case .critical: return Color.infoBannerBackground
-        case .warning: return Color.infoBannerBackground
-        }
-    }
-    
-    var tagTextColor: Color {
-        switch self {
-        case .critical: return Color.redTomato
-        case .warning: return Color.redTomato
-        }
-    }
-
-    var valueColor: Color {
-        switch self {
-        case .critical: return Color.danger
-        case .warning: return Color.orangeWarning
-        }
-    }
-}
-
 // MARK: - ViewModel
-final class AlertsViewModel: ObservableObject {
+final class OnDeliveryViewModel: ObservableObject {
     @Published private(set) var alerts: [Alert] = []
     @Published private(set) var expandedIDs: Set<UUID> = []
 
+    var deliveryOrder: DeliveryOrder
+    
     private var pollingTask: Task<Void, Never>?
     private var missCounts: [UUID: Int] = [:]
     private let maxMissesBeforeRemoval = 2
 
-    private let api: AlertsAPIClient
-
-    init(api: AlertsAPIClient = .init()) {
-        self.api = api
+    private let api: AlertsAPIRepository = AlertsAPIRepository.shared
+    
+    init (deliveryOrder: DeliveryOrder) {
+        self.deliveryOrder = deliveryOrder
     }
 
-    func startPolling(interval: TimeInterval = 5) {
+    func startPolling(interval: TimeInterval = 30) {
         pollingTask?.cancel()
         pollingTask = Task { [weak self] in
             guard let self else { return }

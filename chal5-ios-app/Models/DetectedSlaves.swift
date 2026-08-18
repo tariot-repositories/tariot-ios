@@ -16,3 +16,4 @@ struct DetectedSlaves: Codable {
         case detectedSlaves = "slave_detected"
     }
 }
+

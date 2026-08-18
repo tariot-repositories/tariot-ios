@@ -9,30 +9,21 @@ import Foundation
 
 struct DeliveryOrder: Codable, Hashable {
     let id: Int
-    let masterCode: String
-    let slaveCounts: Int
-    let truckId: Int
+    let truckID: UUID
     let originLocation: String
     let destinationLocation: String
-    let departureScheduledAt: Date
-    let estimatedArrivalAt: Date
-    let status: String
-    let createdAt: Date
-    let completedAt: Date?
+    let departureScheduledAt: String
+    var status: DeliveryStatus
     let createdBy: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case masterCode = "master_code"
-        case slaveCounts = "slave_counts"
-        case truckId = "truck_id"
-        case originLocation = "origin_location"
-        case destinationLocation = "destination_location"
-        case departureScheduledAt = "departure_scheduled_at"
-        case estimatedArrivalAt = "estimated_arrival_at"
-        case status = "status"
-        case createdAt = "created_at"
-        case completedAt = "completed_at"
-        case createdBy = "created_by"
-    }
+    let createdAt: String
+    let completedAt: String?
+    let startedAt: String?
+}
+
+enum DeliveryStatus: String, Codable {
+    case dibuat
+    case menungguKonfirmasiSupir  = "menunggu_konfirmasi_supir"
+    case menungguDeteksiNode      = "menunggu_deteksi_node"
+    case dalamPerjalanan          = "dalam_perjalanan"
+    case selesai
 }

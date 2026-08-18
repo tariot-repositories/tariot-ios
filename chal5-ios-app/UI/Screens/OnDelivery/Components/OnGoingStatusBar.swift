@@ -46,7 +46,6 @@ struct OnGoingStatusBar : View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .border(Color.cardOrder, width: 1)
         .shadow(color: Color.shadow, radius: 18, y: 6)
-        .padding(.horizontal, 20)
         .task {
             calculateElapsedTime()
             

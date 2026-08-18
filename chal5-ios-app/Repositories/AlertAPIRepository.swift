@@ -21,8 +21,8 @@ final class AlertsAPIRepository {
         self.decoder = decoder
     }
     
-    func fetchAlerts(id: UUID) async throws -> [Alert] {
-        let url = baseURL.appendingPathComponent("alerts/\(id.uuidString)")
+    func fetchAlerts() async throws -> [Alert] {
+        let url = baseURL.appendingPathComponent("alerts/\(Secrets.myTruckId.uuidString.lowercased())")
         let (data, response) = try await session.data(from: url)
         
         guard let http = response as? HTTPURLResponse else {
