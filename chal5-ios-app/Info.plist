@@ -10,6 +10,19 @@
 	<string>$(MQTT_PORT)</string>
 	<key>MQTT_USERNAME</key>
 	<string>$(MQTT_USERNAME)</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+    		<key>NSExceptionDomains</key>
+    		<dict>
+        		<key>203.175.11.253</key>
+        		<dict>
+            			<key>NSExceptionAllowsInsecureHTTPLoads</key>
+            			<true/>
+            			<key>NSIncludesSubdomains</key>
+            			<false/>
+        		</dict>
+    		</dict>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>BricolageGrotesque.ttf</string>
