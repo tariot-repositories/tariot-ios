@@ -70,7 +70,7 @@ final class NodeSlaveDetectionViewModel: ObservableObject {
                         print(message.topic)
                         guard let data = message.payload.data(using: .utf8) else { continue }
                         do {
-                            let decodedData = try decoder.decode(SlaveData.self, from: data)
+                            let decodedData = SlaveData.makeSlaveData(from: try decoder.decode(SlaveDataFromIoT.self, from: data))
                             if Int64(Date.now.timeIntervalSince1970) - decodedData.secondSinceEpoch < 2 {
                                 if slaveCodeSet.contains(decodedData.slaveCode) == false {
                                     slaveCodeSet.insert(decodedData.slaveCode)

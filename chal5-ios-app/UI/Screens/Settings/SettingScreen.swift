@@ -9,6 +9,7 @@ struct SettingScreen: View {
     @State private var uuidInput: String = "7E5B6A7A-3B1E-4DB8-97B5-4E6D57D3B1A1"
     @State private var stringInput1: String = "m1"
     @State private var intInput: Int = 2
+    @State private var userId: Int = 1
     @State private var showInvalidUUIDAlert = false
     
     @StateObject var router: Router = .shared
@@ -42,6 +43,14 @@ struct SettingScreen: View {
                     
                     labeledField(label: "Jumlah IoT Slave") {
                         TextField("0", value: $intInput, format: .number)
+                            .keyboardType(.numberPad)
+                            .focused($focusedField, equals: .integer)
+                    }
+                    
+                    Divider()
+                    
+                    labeledField(label: "User ID") {
+                        TextField("0", value: $userId, format: .number)
                             .keyboardType(.numberPad)
                             .focused($focusedField, equals: .integer)
                     }
@@ -102,6 +111,7 @@ struct SettingScreen: View {
         Secrets.masterCode = stringInput1
         Secrets.myTruckId = uuid
         Secrets.slaveCount = intInput
+        Secrets.userId = userId
         
         return true
     }

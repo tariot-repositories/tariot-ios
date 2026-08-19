@@ -31,8 +31,8 @@ struct RootView: View {
                 NodeSlaveDetection(
                     viewModel: NodeSlaveDetectionViewModel(order: viewModel.deliveryOrder!)
                 )
-            default:
-                EmptyView()
+            case .inDeliveryState:
+                DeliveryOrderView(viewModel: DeliveryOrderViewModel(deliveryOrder: viewModel.deliveryOrder))
             }
         }
         .task {

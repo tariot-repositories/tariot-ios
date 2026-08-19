@@ -8,6 +8,7 @@
 import Foundation
 
 enum Secrets {
+    static var userId: Int = 1
     static var myTruckId: UUID = UUID(uuidString: "cef46e10-2ca0-4743-bce5-2ce9bf36aa36")!
     static var slaveCount: Int = 2
     static var masterCode: String = "m1"

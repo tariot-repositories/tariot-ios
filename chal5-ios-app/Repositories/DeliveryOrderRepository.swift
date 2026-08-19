@@ -10,7 +10,7 @@ import Foundation
 final class DeliveryOrderRepository {
     static let shared = DeliveryOrderRepository()
     
-    private let baseURL = URL(string: "http://127.0.0.1:8000")!
+    private let baseURL = URL(string: "http://203.175.11.253:8080/api")!
     private let session: URLSession
     private let decoder: JSONDecoder
 
@@ -22,7 +22,7 @@ final class DeliveryOrderRepository {
     }
 
     func fetchActiveOrder() async throws -> DeliveryOrder? {
-        let url = baseURL.appendingPathComponent("deliveries/truck/\(Secrets.myTruckId.uuidString.lowercased())")
+        let url = baseURL.appendingPathComponent("deliveries")
         let (data, response) = try await session.data(from: url)
 
         guard let http = response as? HTTPURLResponse else {
@@ -36,13 +36,18 @@ final class DeliveryOrderRepository {
             let deliveryOrders = try decoder.decode([DeliveryOrder].self, from: data)
             
             let sortedOrders = deliveryOrders
-                .map { order in (order, Date.from(descriptionString: order.departureScheduledAt)) }
+                .map { order in (order, order.departureScheduledAt) }
                 .sorted { $0.1 < $1.1 }
                 .map { $0.0 }
             
             for order in sortedOrders {
+                if order.truckID != Secrets.myTruckId {
+                    continue
+                }
+                
                 if order.status != .selesai {
                     return order
+//                    return DeliveryOrder(from: order)
                 }
             }
 

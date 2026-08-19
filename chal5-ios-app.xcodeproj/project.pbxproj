@@ -7,11 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB9BABCA3034FD2D00858F73 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9BABC93034FD2D00858F73 /* WidgetKit.framework */; };
+		FB9BABCC3034FD2D00858F73 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9BABCB3034FD2D00858F73 /* SwiftUI.framework */; };
+		FB9BABDD3034FD2E00858F73 /* LiveMonitorWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB9BABC73034FD2D00858F73 /* LiveMonitorWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBF265F6302DC2FE00DD9016 /* CocoaMQTT in Frameworks */ = {isa = PBXBuildFile; productRef = FBF265F5302DC2FE00DD9016 /* CocoaMQTT */; };
 		FBF265F8302DC2FE00DD9016 /* CocoaMQTTWebSocket in Frameworks */ = {isa = PBXBuildFile; productRef = FBF265F7302DC2FE00DD9016 /* CocoaMQTTWebSocket */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FB9BABDB3034FD2E00858F73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBCF7BDD302C1B8E00C85F18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB9BABC63034FD2D00858F73;
+			remoteInfo = LiveMonitorWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FB9BABE23034FD2E00858F73 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FB9BABDD3034FD2E00858F73 /* LiveMonitorWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		FB9BABC73034FD2D00858F73 /* LiveMonitorWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LiveMonitorWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB9BABC93034FD2D00858F73 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		FB9BABCB3034FD2D00858F73 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FBCF7BE5302C1B8E00C85F18 /* chal5-ios-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chal5-ios-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -37,6 +67,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FB9BABC43034FD2D00858F73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB9BABCC3034FD2D00858F73 /* SwiftUI.framework in Frameworks */,
+				FB9BABCA3034FD2D00858F73 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBCF7BE2302C1B8E00C85F18 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -49,10 +88,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB9BABC83034FD2D00858F73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB9BABC93034FD2D00858F73 /* WidgetKit.framework */,
+				FB9BABCB3034FD2D00858F73 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FBCF7BDC302C1B8E00C85F18 = {
 			isa = PBXGroup;
 			children = (
 				FBCF7BE7302C1B8E00C85F18 /* chal5-ios-app */,
+				FB9BABC83034FD2D00858F73 /* Frameworks */,
 				FBCF7BE6302C1B8E00C85F18 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				FBCF7BE5302C1B8E00C85F18 /* chal5-ios-app.app */,
+				FB9BABC73034FD2D00858F73 /* LiveMonitorWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,6 +118,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FB9BABC63034FD2D00858F73 /* LiveMonitorWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB9BABDE3034FD2E00858F73 /* Build configuration list for PBXNativeTarget "LiveMonitorWidgetExtension" */;
+			buildPhases = (
+				FB9BABC33034FD2D00858F73 /* Sources */,
+				FB9BABC43034FD2D00858F73 /* Frameworks */,
+				FB9BABC53034FD2D00858F73 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LiveMonitorWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = LiveMonitorWidgetExtension;
+			productReference = FB9BABC73034FD2D00858F73 /* LiveMonitorWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FBCF7BE4302C1B8E00C85F18 /* chal5-ios-app */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBCF7BF0302C1B8F00C85F18 /* Build configuration list for PBXNativeTarget "chal5-ios-app" */;
@@ -75,10 +144,12 @@
 				FBCF7BE1302C1B8E00C85F18 /* Sources */,
 				FBCF7BE2302C1B8E00C85F18 /* Frameworks */,
 				FBCF7BE3302C1B8E00C85F18 /* Resources */,
+				FB9BABE23034FD2E00858F73 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FB9BABDC3034FD2E00858F73 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				FBCF7BE7302C1B8E00C85F18 /* chal5-ios-app */,
@@ -102,6 +173,9 @@
 				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
+					FB9BABC63034FD2D00858F73 = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					FBCF7BE4302C1B8E00C85F18 = {
 						CreatedOnToolsVersion = 26.6;
 					};
@@ -125,11 +199,19 @@
 			projectRoot = "";
 			targets = (
 				FBCF7BE4302C1B8E00C85F18 /* chal5-ios-app */,
+				FB9BABC63034FD2D00858F73 /* LiveMonitorWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FB9BABC53034FD2D00858F73 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBCF7BE3302C1B8E00C85F18 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,6 +222,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FB9BABC33034FD2D00858F73 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBCF7BE1302C1B8E00C85F18 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -149,7 +238,75 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		FB9BABDC3034FD2E00858F73 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB9BABC63034FD2D00858F73 /* LiveMonitorWidgetExtension */;
+			targetProxy = FB9BABDB3034FD2E00858F73 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		FB9BABDF3034FD2E00858F73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XC4BM85HNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LiveMonitorWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiveMonitorWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tariot.chal5-ios-app.LiveMonitorWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FB9BABE03034FD2E00858F73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XC4BM85HNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LiveMonitorWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LiveMonitorWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tariot.chal5-ios-app.LiveMonitorWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		FBCF7BEE302C1B8F00C85F18 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = FBCF7BE7302C1B8E00C85F18 /* chal5-ios-app */;
@@ -348,6 +505,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FB9BABDE3034FD2E00858F73 /* Build configuration list for PBXNativeTarget "LiveMonitorWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB9BABDF3034FD2E00858F73 /* Debug */,
+				FB9BABE03034FD2E00858F73 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FBCF7BE0302C1B8E00C85F18 /* Build configuration list for PBXProject "chal5-ios-app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
