@@ -10,7 +10,7 @@ import Foundation
 final class AlertsAPIRepository {
     static let shared: AlertsAPIRepository = AlertsAPIRepository()
     
-    private let baseURL = URL(string: "http://127.0.0.1:8000")!
+    private let baseURL = URL(string: "http://203.175.11.253:8080/api")!
     private let session: URLSession
     private let decoder: JSONDecoder
     

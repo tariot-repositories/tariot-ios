@@ -10,7 +10,7 @@ import Foundation
 final class DeliveryOrderRepository {
     static let shared = DeliveryOrderRepository()
     
-    private let baseURL = URL(string: "http://203.175.11.253:8080/api")!
+    private let baseURL = URL(string: Secrets.hostUrl)!
     private let session: URLSession
     private let decoder: JSONDecoder
 
@@ -35,7 +35,7 @@ final class DeliveryOrderRepository {
         case 200..<300:
             let deliveryOrders = try decoder.decode([DeliveryOrder].self, from: data)
             
-            let sortedOrders = deliveryOrders
+            let sortedOrders = deliveryOrders   
                 .map { order in (order, order.departureScheduledAt) }
                 .sorted { $0.1 < $1.1 }
                 .map { $0.0 }

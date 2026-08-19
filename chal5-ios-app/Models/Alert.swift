@@ -28,4 +28,16 @@ struct Alert: Decodable, Identifiable {
     let valueAtTrigger: Double
     let message: String
     let createdAt: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case slaveCode = "slaveID"  
+        case truckUUID
+        case readingID
+        case parameter
+        case severity
+        case valueAtTrigger
+        case message
+        case createdAt
+    }
 }

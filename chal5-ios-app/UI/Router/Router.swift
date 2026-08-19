@@ -22,6 +22,9 @@ final class Router: ObservableObject {
     @Published var path = NavigationPath()
     
     func push(_ route: Route) {
+        if case .inDelivery(_) = route {
+            UserDefaultRepository.shared.setOnDeliveryDate(Date.now)
+        }
         path.append(route)
     }
     
@@ -53,9 +56,7 @@ struct RouteDestinationView: View {
         case .inDelivery(let order):
             OnDeliveryView(
                 viewModel: OnDeliveryViewModel(deliveryOrder: order)
-            ).task {
-                UserDefaultRepository.shared.setOnDeliveryDate(Date.now)
-            }
+            )
         case .complete(let order):
             FinishScreen(deliveryOrder: order)
         }

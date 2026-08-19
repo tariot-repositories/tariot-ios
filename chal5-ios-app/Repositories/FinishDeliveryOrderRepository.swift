@@ -10,7 +10,7 @@ import Foundation
 final class FinishDeliveryOrderRepository {
     static let shared = FinishDeliveryOrderRepository()
     
-    private let baseURL = URL(string: "http://127.0.0.1:8000")!
+    private let baseURL = URL(string: Secrets.hostUrl)!
     private let session: URLSession
     private let decoder: JSONDecoder
     

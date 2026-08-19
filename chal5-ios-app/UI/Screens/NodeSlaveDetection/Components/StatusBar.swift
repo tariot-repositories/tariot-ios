@@ -47,7 +47,6 @@ struct StatusBar : View {
         .padding(.horizontal, 18)
         .padding(.vertical, 15)
         .background(.white)
-        .frame(width: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .border(Color.cardOrder, width: 1)
         .shadow(color: Color.shadow, radius: 18, y: 6)

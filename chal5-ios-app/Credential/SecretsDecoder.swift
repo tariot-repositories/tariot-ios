@@ -9,10 +9,12 @@ import Foundation
 
 enum Secrets {
     static var userId: Int = 1
-    static var myTruckId: UUID = UUID(uuidString: "cef46e10-2ca0-4743-bce5-2ce9bf36aa36")!
+    static var myTruckId: UUID = UUID(uuidString: "7E5B6A7A-3B1E-4DB8-97B5-4E6D57D3B1A1")!
     static var slaveCount: Int = 2
     static var masterCode: String = "m1"
 
+    static var hostUrl: String = "http://203.175.11.253:3000"
+    
     static var mqttHost: String {
         guard let key = Bundle.main.infoDictionary?["MQTT_HOST"] as? String else {
             fatalError("Missing MQTT HOST")
