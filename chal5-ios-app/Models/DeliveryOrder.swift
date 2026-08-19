@@ -34,16 +34,12 @@ struct DriverDeliveryDTO: Codable, Hashable {
 enum DeliveryStatus: String, Codable {
     case dibuat
     case menungguKonfirmasiSupir  = "menunggu_konfirmasi_supir"
-    case menungguDeteksiNode      = "   "
+    case menungguDeteksiNode      = "menunggu_deteksi_node"
     case dalamPerjalanan          = "dalam_perjalanan"
     case selesai
 }
 
 extension DeliveryOrder {
-    /// Mengubah DriverDeliveryDTO menjadi DeliveryOrder.
-    /// Asumsi: field epoch (`departureScheduledAt`, `createdAt`, `completedAt`) dalam satuan DETIK,
-    /// dan dikonversi ke String memakai `Date.description` bawaan Swift
-    /// (format: "yyyy-MM-dd HH:mm:ss +0000", selalu UTC).
     init(from dto: DriverDeliveryDTO) {
         self.id = dto.id
         self.truckID = dto.truckID

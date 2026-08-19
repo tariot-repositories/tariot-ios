@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB6E8FB63035A732009C7564 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9BABC93034FD2D00858F73 /* WidgetKit.framework */; };
+		FB6E8FB73035A732009C7564 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9BABCB3034FD2D00858F73 /* SwiftUI.framework */; };
+		FB6E8FC83035A733009C7564 /* live-monitor-widgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB6E8FB53035A732009C7564 /* live-monitor-widgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FB9BABCA3034FD2D00858F73 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9BABC93034FD2D00858F73 /* WidgetKit.framework */; };
 		FB9BABCC3034FD2D00858F73 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9BABCB3034FD2D00858F73 /* SwiftUI.framework */; };
 		FB9BABDD3034FD2E00858F73 /* LiveMonitorWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB9BABC73034FD2D00858F73 /* LiveMonitorWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -15,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FB6E8FC63035A733009C7564 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBCF7BDD302C1B8E00C85F18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB6E8FB43035A732009C7564;
+			remoteInfo = "live-monitor-widgetExtension";
+		};
 		FB9BABDB3034FD2E00858F73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBCF7BDD302C1B8E00C85F18 /* Project object */;
@@ -32,6 +42,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				FB9BABDD3034FD2E00858F73 /* LiveMonitorWidgetExtension.appex in Embed Foundation Extensions */,
+				FB6E8FC83035A733009C7564 /* live-monitor-widgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -39,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FB6E8FB53035A732009C7564 /* live-monitor-widgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "live-monitor-widgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9BABC73034FD2D00858F73 /* LiveMonitorWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LiveMonitorWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9BABC93034FD2D00858F73 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB9BABCB3034FD2D00858F73 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -67,6 +79,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FB6E8FB23035A732009C7564 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB6E8FB73035A732009C7564 /* SwiftUI.framework in Frameworks */,
+				FB6E8FB63035A732009C7564 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FB9BABC43034FD2D00858F73 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,6 +132,7 @@
 			children = (
 				FBCF7BE5302C1B8E00C85F18 /* chal5-ios-app.app */,
 				FB9BABC73034FD2D00858F73 /* LiveMonitorWidgetExtension.appex */,
+				FB6E8FB53035A732009C7564 /* live-monitor-widgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,6 +140,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FB6E8FB43035A732009C7564 /* live-monitor-widgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB6E8FCB3035A733009C7564 /* Build configuration list for PBXNativeTarget "live-monitor-widgetExtension" */;
+			buildPhases = (
+				FB6E8FB13035A732009C7564 /* Sources */,
+				FB6E8FB23035A732009C7564 /* Frameworks */,
+				FB6E8FB33035A732009C7564 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "live-monitor-widgetExtension";
+			packageProductDependencies = (
+			);
+			productName = "live-monitor-widgetExtension";
+			productReference = FB6E8FB53035A732009C7564 /* live-monitor-widgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FB9BABC63034FD2D00858F73 /* LiveMonitorWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB9BABDE3034FD2E00858F73 /* Build configuration list for PBXNativeTarget "LiveMonitorWidgetExtension" */;
@@ -150,6 +191,7 @@
 			);
 			dependencies = (
 				FB9BABDC3034FD2E00858F73 /* PBXTargetDependency */,
+				FB6E8FC73035A733009C7564 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				FBCF7BE7302C1B8E00C85F18 /* chal5-ios-app */,
@@ -173,6 +215,9 @@
 				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
+					FB6E8FB43035A732009C7564 = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					FB9BABC63034FD2D00858F73 = {
 						CreatedOnToolsVersion = 26.6;
 					};
@@ -200,11 +245,19 @@
 			targets = (
 				FBCF7BE4302C1B8E00C85F18 /* chal5-ios-app */,
 				FB9BABC63034FD2D00858F73 /* LiveMonitorWidgetExtension */,
+				FB6E8FB43035A732009C7564 /* live-monitor-widgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FB6E8FB33035A732009C7564 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FB9BABC53034FD2D00858F73 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +275,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FB6E8FB13035A732009C7564 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FB9BABC33034FD2D00858F73 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,6 +299,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FB6E8FC73035A733009C7564 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB6E8FB43035A732009C7564 /* live-monitor-widgetExtension */;
+			targetProxy = FB6E8FC63035A733009C7564 /* PBXContainerItemProxy */;
+		};
 		FB9BABDC3034FD2E00858F73 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FB9BABC63034FD2D00858F73 /* LiveMonitorWidgetExtension */;
@@ -247,6 +312,66 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		FB6E8FC93035A733009C7564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XC4BM85HNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "live-monitor-widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "live-monitor-widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tariot.chal5-ios-app.live-monitor-widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FB6E8FCA3035A733009C7564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XC4BM85HNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "live-monitor-widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "live-monitor-widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tariot.chal5-ios-app.live-monitor-widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		FB9BABDF3034FD2E00858F73 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -505,6 +630,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FB6E8FCB3035A733009C7564 /* Build configuration list for PBXNativeTarget "live-monitor-widgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB6E8FC93035A733009C7564 /* Debug */,
+				FB6E8FCA3035A733009C7564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FB9BABDE3034FD2E00858F73 /* Build configuration list for PBXNativeTarget "LiveMonitorWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
