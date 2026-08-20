@@ -9,7 +9,6 @@ import SwiftUI
 
 struct OnDeliveryView: View {
     @ObservedObject var viewModel: OnDeliveryViewModel
-    
     init (viewModel: OnDeliveryViewModel) {
         self.viewModel = viewModel
     }
@@ -67,10 +66,13 @@ struct OnDeliveryView: View {
         }
         .navigationBarBackButtonHidden(true)
         .task {
+            viewModel.activityController.reconcileExistingActivities()
             viewModel.startPolling()
+            viewModel.activityController.start()
         }
         .onDisappear {
             viewModel.stopPolling()
+            viewModel.activityController.end()
         }
         .background(
             Color.veryLigthGreen

@@ -33,6 +33,8 @@ enum OnDeliveryAlertType {
 
 // MARK: - ViewModel
 final class OnDeliveryViewModel: ObservableObject {
+    let activityController = LiveMonitorActivityController()
+    
     @Published private(set) var alerts: [Alert] = []
     @Published private(set) var expandedIDs: Set<UUID> = []
 
@@ -52,6 +54,7 @@ final class OnDeliveryViewModel: ObservableObject {
     private let api: AlertsAPIRepository = AlertsAPIRepository.shared
     private let finishRepository: FinishDeliveryOrderRepository = FinishDeliveryOrderRepository.shared
     
+
     init (deliveryOrder: DeliveryOrder) {
         self.deliveryOrder = deliveryOrder
     }
@@ -109,7 +112,16 @@ final class OnDeliveryViewModel: ObservableObject {
         var next: [Alert] = []
         var stillMissing: [UUID: Int] = [:]
 
+        var warning: Int = 0
+        var critical: Int = 0
+        
         for existing in alerts {
+            if existing.severity == .critical {
+                critical += 1
+            } else {
+                warning += 1
+            }
+            
             if let updated = fetchedById.removeValue(forKey: existing.id) {
                 next.append(updated)
             } else {
@@ -124,7 +136,16 @@ final class OnDeliveryViewModel: ObservableObject {
         }
 
         let newOnes = fetchedById.values.sorted { $0.createdAt < $1.createdAt }
+        for newAlert in newOnes {
+            if newAlert.severity == .critical {
+                critical += 1
+            } else {
+                warning += 1
+            }
+        }
+        
         next.append(contentsOf: newOnes)
+        activityController.update(criticalCount: critical, warningCount: warning)
 
         missCounts = stillMissing
 
